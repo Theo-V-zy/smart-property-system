@@ -1,0 +1,17 @@
+.DS_Store
+~$*.docx
+*.docx
+
+.idea/
+.vscode/
+out/
+
+tmp_filecontent.png
+report/
+
+smart-property-frontend/node_modules/
+smart-property-frontend/dist/
+
+smart-property-backend/target/
+
+*.log
