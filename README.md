@@ -117,24 +117,6 @@ npm run dev
 - 物业账号：`staff01`
 - 物业密码：`123456`
 
-## 实验报告
-
-实验报告已整理为 HTML 文件：
-
-- `report/smart-property-report.html`
-
-可直接在浏览器中打开并导出为 PDF。
-
-## 开源说明
-
-本项目适合作为课程项目学习与交流使用，已补充：
-
-- 根目录 `.gitignore`
-- `MIT` 开源许可证
-- 适合 GitHub 展示的项目说明文档
-
-如果你准备上传到 GitHub，建议不要提交 `node_modules`、`target`、IDE 配置和本地缓存文件。
-
 ## License
 
 This project is licensed under the MIT License.
