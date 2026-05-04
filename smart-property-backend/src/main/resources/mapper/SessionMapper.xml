@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smartproperty.mapper.SessionMapper">
+
+    <insert id="insert" parameterType="com.example.smartproperty.entity.UserSession"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into user_session(user_id, token, expires_at, created_at)
+        values(#{userId}, #{token}, #{expiresAt}, now())
+    </insert>
+
+    <select id="findUserIdByToken" resultType="java.lang.Long">
+        select user_id from user_session where token = #{token} and expires_at &gt; #{now} limit 1
+    </select>
+
+    <delete id="deleteByToken">
+        delete from user_session where token = #{token}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from user_session where user_id = #{userId}
+    </delete>
+</mapper>

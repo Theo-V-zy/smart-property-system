@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smartproperty.mapper.EvaluationMapper">
+
+    <insert id="insert" parameterType="com.example.smartproperty.entity.ServiceEvaluation"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into service_evaluation(order_id, owner_id, service_score, quality_score, speed_score, content, images_json, created_at)
+        values(#{orderId}, #{ownerId}, #{serviceScore}, #{qualityScore}, #{speedScore}, #{content}, #{imagesJson}, now())
+    </insert>
+
+    <select id="findByOrderId" resultType="com.example.smartproperty.entity.ServiceEvaluation">
+        select * from service_evaluation where order_id = #{orderId} limit 1
+    </select>
+</mapper>

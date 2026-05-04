@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smartproperty.mapper.ServiceOrderMapper">
+
+    <insert id="insert" parameterType="com.example.smartproperty.entity.ServiceOrder"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into service_order(order_no, owner_id, owner_name, phone, category, subtype, description, images_json, address, status, reply, handler_id, handler_name, handle_record, created_at, updated_at)
+        values(#{orderNo}, #{ownerId}, #{ownerName}, #{phone}, #{category}, #{subtype}, #{description}, #{imagesJson}, #{address}, #{status}, #{reply}, #{handlerId}, #{handlerName}, #{handleRecord}, now(), now())
+    </insert>
+
+    <select id="findList" resultType="com.example.smartproperty.entity.ServiceOrder">
+        select * from service_order
+        <where>
+            <if test="ownerId != null">
+                owner_id = #{ownerId}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="category != null and category != ''">
+                and category = #{category}
+            </if>
+        </where>
+        order by updated_at desc, id desc
+    </select>
+
+    <select id="findById" resultType="com.example.smartproperty.entity.ServiceOrder">
+        select * from service_order where id = #{id}
+    </select>
+
+    <update id="updateProcess" parameterType="com.example.smartproperty.entity.ServiceOrder">
+        update service_order
+        set status = #{status},
+            reply = #{reply},
+            handle_record = #{handleRecord},
+            handler_id = #{handlerId},
+            handler_name = #{handlerName},
+            updated_at = now()
+        where id = #{id}
+    </update>
+
+    <select id="countByStatus" resultType="java.lang.Integer">
+        select count(*) from service_order where status = #{status}
+    </select>
+
+    <select id="countByOwnerAndStatus" resultType="java.lang.Integer">
+        select count(*) from service_order where owner_id = #{ownerId} and status = #{status}
+    </select>
+</mapper>
