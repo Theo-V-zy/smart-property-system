@@ -3,9 +3,13 @@ import { onMounted, reactive, ref } from 'vue'
 import { showSuccessToast } from 'vant'
 import { useRouter } from 'vue-router'
 import { getProfileApi, updateProfileApi } from '../api'
+import { useAuthStore } from '../stores/auth'
+import { toBase64List } from '../utils'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const loading = ref(false)
+const avatarFileList = ref([])
 const form = reactive({
   name: '',
   phone: '',
@@ -17,12 +21,30 @@ const form = reactive({
 onMounted(async () => {
   const profile = await getProfileApi()
   Object.assign(form, profile)
+  if (profile.avatar) {
+    avatarFileList.value = [
+      {
+        url: profile.avatar,
+        isImage: true
+      }
+    ]
+  }
 })
 
 const submit = async () => {
   loading.value = true
   try {
-    await updateProfileApi(form)
+    const avatarList = avatarFileList.value.length
+      ? await toBase64List(avatarFileList.value.map((item) => ({
+          ...item,
+          content: item.content || item.url
+        })))
+      : []
+    await updateProfileApi({
+      ...form,
+      avatar: avatarList[0] || ''
+    })
+    await authStore.fetchCurrentUser()
     showSuccessToast('资料已保存')
     router.replace('/profile')
   } finally {
@@ -37,7 +59,16 @@ const submit = async () => {
       <van-nav-bar title="个人资料编辑页" left-arrow @click-left="router.back()" />
       <div class="glass-card" style="padding: 18px;">
         <van-form @submit="submit">
-          <van-field v-model="form.avatar" label="头像地址" placeholder="可粘贴网络图片地址，留空则使用默认样式" />
+          <van-field name="avatar" label="头像上传">
+            <template #input>
+              <van-uploader
+                v-model="avatarFileList"
+                :max-count="1"
+                accept="image/*"
+                preview-size="72"
+              />
+            </template>
+          </van-field>
           <van-field v-model="form.name" label="姓名" placeholder="请输入姓名" />
           <van-field v-model="form.phone" label="手机号" placeholder="请输入手机号" />
           <van-field v-model="form.address" label="住址" placeholder="请输入楼栋房号" />
