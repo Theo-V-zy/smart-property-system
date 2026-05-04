@@ -60,7 +60,11 @@ const updatePassword = async () => {
     <div class="glass-card" style="margin-top: 16px; overflow: hidden;">
       <van-cell title="个人资料" is-link @click="router.push('/profile-edit')" />
       <van-cell title="我的地址" :value="user.address || '未填写'" />
-      <van-cell title="负责业务" :value="user.businessScope || '住户身份无需填写'" />
+      <van-cell
+        v-if="user.role === 'STAFF'"
+        title="负责业务"
+        :value="user.businessScope || '暂未填写'"
+      />
       <van-cell title="修改密码" is-link @click="showPassword = true" />
       <van-cell title="退出登录" is-link style="color: #ee3f4d;" @click="logout" />
     </div>

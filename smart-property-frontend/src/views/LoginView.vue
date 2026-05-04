@@ -56,11 +56,14 @@ const login = async () => {
         </van-form>
 
         <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary);">
-          <span>体验账号：`owner01 / 123456`、`staff01 / 123456`</span>
+          <span>演示账号：owner01 / 123456，staff01 / 123456</span>
         </div>
         <div style="margin-top: 18px; text-align: center; font-size: 14px;">
-          还没有账号？
+          业主还没有账号？
           <span style="color: var(--brand-blue);" @click="router.push('/register')">立即注册</span>
+        </div>
+        <div style="margin-top: 10px; text-align: center; font-size: 12px; color: var(--text-secondary);">
+          物业人员账号由系统预置，不开放公开注册。
         </div>
       </div>
     </div>

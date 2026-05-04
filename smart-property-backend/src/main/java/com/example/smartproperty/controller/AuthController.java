@@ -3,9 +3,7 @@ package com.example.smartproperty.controller;
 import com.example.smartproperty.common.ApiResponse;
 import com.example.smartproperty.dto.LoginRequest;
 import com.example.smartproperty.dto.OwnerRegisterRequest;
-import com.example.smartproperty.dto.StaffRegisterRequest;
 import com.example.smartproperty.service.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +27,6 @@ public class AuthController {
     @PostMapping("/register/owner")
     public ApiResponse<Void> registerOwner(@Valid @RequestBody OwnerRegisterRequest request) {
         authService.registerOwner(request);
-        return ApiResponse.success("注册成功", null);
-    }
-
-    @PostMapping("/register/staff")
-    public ApiResponse<Void> registerStaff(@Valid @RequestBody StaffRegisterRequest request) {
-        authService.registerStaff(request);
         return ApiResponse.success("注册成功", null);
     }
 

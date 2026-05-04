@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { showSuccessToast } from 'vant'
 import { useRouter } from 'vue-router'
 import { getProfileApi, updateProfileApi } from '../api'
@@ -10,6 +10,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 const loading = ref(false)
 const avatarFileList = ref([])
+const isStaff = computed(() => authStore.user?.role === 'STAFF')
 const form = reactive({
   name: '',
   phone: '',
@@ -42,6 +43,7 @@ const submit = async () => {
       : []
     await updateProfileApi({
       ...form,
+      businessScope: isStaff.value ? form.businessScope : '',
       avatar: avatarList[0] || ''
     })
     await authStore.fetchCurrentUser()
@@ -72,7 +74,12 @@ const submit = async () => {
           <van-field v-model="form.name" label="姓名" placeholder="请输入姓名" />
           <van-field v-model="form.phone" label="手机号" placeholder="请输入手机号" />
           <van-field v-model="form.address" label="住址" placeholder="请输入楼栋房号" />
-          <van-field v-model="form.businessScope" label="负责业务" placeholder="物业人员填写负责业务" />
+          <van-field
+            v-if="isStaff"
+            v-model="form.businessScope"
+            label="负责业务"
+            placeholder="请输入负责业务范围"
+          />
           <div style="margin-top: 24px;">
             <van-button block round type="primary" native-type="submit" :loading="loading">
               保存资料

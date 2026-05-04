@@ -6,7 +6,6 @@ import com.example.smartproperty.common.RoleConstants;
 import com.example.smartproperty.common.SecurityUtils;
 import com.example.smartproperty.dto.LoginRequest;
 import com.example.smartproperty.dto.OwnerRegisterRequest;
-import com.example.smartproperty.dto.StaffRegisterRequest;
 import com.example.smartproperty.entity.User;
 import com.example.smartproperty.entity.UserSession;
 import com.example.smartproperty.mapper.SessionMapper;
@@ -42,20 +41,6 @@ public class AuthServiceImpl implements AuthService {
         user.setPhone(request.getPhone());
         user.setCommunityName(request.getCommunityName());
         user.setAddress(request.getAddress());
-        user.setAvatar(defaultAvatar());
-        userMapper.insert(user);
-    }
-
-    @Override
-    public void registerStaff(StaffRegisterRequest request) {
-        ensureUserNotExists(request.getUsername(), RoleConstants.STAFF);
-        User user = new User();
-        user.setRole(RoleConstants.STAFF);
-        user.setUsername(request.getUsername());
-        user.setPasswordHash(SecurityUtils.md5(request.getPassword()));
-        user.setName(request.getName());
-        user.setPhone(request.getPhone());
-        user.setBusinessScope(request.getBusinessScope());
         user.setAvatar(defaultAvatar());
         userMapper.insert(user);
     }

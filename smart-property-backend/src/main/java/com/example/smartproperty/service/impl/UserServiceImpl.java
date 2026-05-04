@@ -53,7 +53,11 @@ public class UserServiceImpl implements UserService {
         user.setName(blankToOriginal(request.getName(), user.getName()));
         user.setPhone(blankToOriginal(request.getPhone(), user.getPhone()));
         user.setAddress(blankToOriginal(request.getAddress(), user.getAddress()));
-        user.setBusinessScope(blankToOriginal(request.getBusinessScope(), user.getBusinessScope()));
+        if (RoleConstants.STAFF.equals(user.getRole())) {
+            user.setBusinessScope(blankToOriginal(request.getBusinessScope(), user.getBusinessScope()));
+        } else {
+            user.setBusinessScope(null);
+        }
         user.setAvatar(blankToOriginal(request.getAvatar(), user.getAvatar()));
         userMapper.updateProfile(user);
     }

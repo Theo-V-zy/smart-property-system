@@ -2,7 +2,6 @@ import http from './http'
 
 export const loginApi = (payload) => http.post('/auth/login', payload)
 export const registerOwnerApi = (payload) => http.post('/auth/register/owner', payload)
-export const registerStaffApi = (payload) => http.post('/auth/register/staff', payload)
 export const getCurrentUserApi = () => http.get('/auth/me')
 export const logoutApi = () => http.post('/auth/logout')
 
