@@ -18,6 +18,25 @@
         select * from sys_user where id = #{id}
     </select>
 
+    <select id="findOwners" resultType="com.example.smartproperty.entity.User">
+        select *
+        from sys_user
+        where role = 'OWNER'
+        <if test="keyword != null and keyword != ''">
+            and (
+                name like concat('%', #{keyword}, '%')
+                or phone like concat('%', #{keyword}, '%')
+                or address like concat('%', #{keyword}, '%')
+                or community_name like concat('%', #{keyword}, '%')
+            )
+        </if>
+        order by id desc
+    </select>
+
+    <select id="findByIdAndRole" resultType="com.example.smartproperty.entity.User">
+        select * from sys_user where id = #{id} and role = #{role} limit 1
+    </select>
+
     <update id="updateProfile" parameterType="com.example.smartproperty.entity.User">
         update sys_user
         set name = #{name},

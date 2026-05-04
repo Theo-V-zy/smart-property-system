@@ -1,6 +1,5 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { showSuccessToast } from 'vant'
 import { useRouter } from 'vue-router'
 import { getHomeSummaryApi } from '../api'
 import { useAuthStore } from '../stores/auth'
@@ -32,7 +31,7 @@ const actions = computed(() => (
         { title: '发布通知', icon: 'bullhorn-o', color: 'linear-gradient(135deg, #ff9c58, #ffd36d)', onClick: () => router.push('/notices') },
         { title: '发布招领', icon: 'guide-o', color: 'linear-gradient(135deg, #42c58c, #68e4b0)', onClick: () => router.push('/lost-found') },
         { title: '处理工单', icon: 'add-o', color: 'linear-gradient(135deg, #7d63ff, #9db6ff)', onClick: () => router.push('/tasks?status=PENDING') },
-        { title: '住户信息', icon: 'friends-o', color: 'linear-gradient(135deg, #ff7c82, #ffb37a)', onClick: () => showSuccessToast('当前实验版聚焦物业业务流程') },
+        { title: '住户信息', icon: 'friends-o', color: 'linear-gradient(135deg, #ff7c82, #ffb37a)', onClick: () => router.push('/residents') },
         { title: '个人中心', icon: 'star-o', color: 'linear-gradient(135deg, #28a2ff, #85d3ff)', onClick: () => router.push('/profile') }
       ]
 ))

@@ -20,5 +20,7 @@ export const getLostFoundListApi = (params) => http.get('/lost-found', { params 
 export const createLostFoundApi = (payload) => http.post('/lost-found', payload)
 
 export const getProfileApi = () => http.get('/users/profile')
+export const getOwnerListApi = (params) => http.get('/users/owners', { params })
+export const getOwnerDetailApi = (id) => http.get(`/users/owners/${id}`)
 export const updateProfileApi = (payload) => http.put('/users/profile', payload)
 export const updatePasswordApi = (payload) => http.put('/users/password', payload)

@@ -28,6 +28,7 @@ const routes = [
   { path: '/order/:id', component: () => import('../views/OrderDetailView.vue') },
   { path: '/evaluate/:id', component: () => import('../views/EvaluationView.vue') },
   { path: '/notices', component: () => import('../views/NoticeView.vue') },
+  { path: '/residents', component: () => import('../views/ResidentInfoView.vue') },
   { path: '/profile-edit', component: () => import('../views/ProfileEditView.vue') }
 ]
 

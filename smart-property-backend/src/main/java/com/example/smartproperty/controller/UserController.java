@@ -6,11 +6,14 @@ import com.example.smartproperty.dto.ProfileUpdateRequest;
 import com.example.smartproperty.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,6 +29,16 @@ public class UserController {
     @GetMapping("/profile")
     public ApiResponse<Map<String, Object>> profile() {
         return ApiResponse.success(userService.profile());
+    }
+
+    @GetMapping("/owners")
+    public ApiResponse<List<Map<String, Object>>> owners(@RequestParam(required = false) String keyword) {
+        return ApiResponse.success(userService.ownerList(keyword));
+    }
+
+    @GetMapping("/owners/{id}")
+    public ApiResponse<Map<String, Object>> ownerDetail(@PathVariable Long id) {
+        return ApiResponse.success(userService.ownerDetail(id));
     }
 
     @PutMapping("/profile")
