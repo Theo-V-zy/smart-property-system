@@ -1,9 +1,12 @@
 package com.example.smartproperty.controller;
 
 import com.example.smartproperty.common.ApiResponse;
+import com.example.smartproperty.dto.OrderAssistantRequest;
+import com.example.smartproperty.dto.OrderAssistantResponse;
 import com.example.smartproperty.dto.EvaluationCreateRequest;
 import com.example.smartproperty.dto.OrderCreateRequest;
 import com.example.smartproperty.dto.OrderProcessRequest;
+import com.example.smartproperty.service.OrderAssistantService;
 import com.example.smartproperty.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +26,22 @@ import java.util.Map;
 public class OrderController {
 
     private final OrderService orderService;
+    private final OrderAssistantService orderAssistantService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, OrderAssistantService orderAssistantService) {
         this.orderService = orderService;
+        this.orderAssistantService = orderAssistantService;
     }
 
     @PostMapping
     public ApiResponse<Void> create(@Valid @RequestBody OrderCreateRequest request) {
         orderService.create(request);
         return ApiResponse.success("提交成功", null);
+    }
+
+    @PostMapping("/assistant")
+    public ApiResponse<OrderAssistantResponse> assist(@Valid @RequestBody OrderAssistantRequest request) {
+        return ApiResponse.success(orderAssistantService.assist(request));
     }
 
     @GetMapping

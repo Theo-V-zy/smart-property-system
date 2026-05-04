@@ -6,6 +6,7 @@
 
 - 双角色体系：区分业主和物业人员，不同身份拥有不同首页入口与业务权限
 - 工单闭环：支持提交、处理、查看进度、完成评价的完整流程
+- 特色功能：支持语音输入报修，并提供 AI 智能整理、分类推荐与处理建议
 - 前后端分离：前端聚焦移动体验，后端负责鉴权、业务规则和数据持久化
 - 报告配套完整：附带 HTML 版实验报告，便于直接导出 PDF 提交
 
@@ -67,6 +68,10 @@
 - `MYSQL_DATABASE`
 - `MYSQL_USERNAME`
 - `MYSQL_PASSWORD`
+- `AI_BASE_URL`
+- `AI_API_KEY`
+- `AI_MODEL`
+- `AI_TIMEOUT_MILLIS`
 
 如果不设置这些变量，默认使用本地开发配置：
 
@@ -75,6 +80,28 @@
 - Database：`smart_property`
 - Username：`root`
 - Password：`we005218`
+
+AI 助手默认支持“本地智能分析”兜底，因此即使没有配置大模型密钥，也可以直接演示语音输入和智能辅助填写功能；若配置了 `AI_API_KEY` 等参数，则会调用兼容 OpenAI Chat Completions 的模型接口返回更自然的分析结果。
+
+常见真实模型配置示例：
+
+DeepSeek：
+
+```bash
+export AI_BASE_URL=https://api.deepseek.com/v1
+export AI_API_KEY=你的DeepSeekKey
+export AI_MODEL=deepseek-chat
+```
+
+OpenAI：
+
+```bash
+export AI_BASE_URL=https://api.openai.com/v1
+export AI_API_KEY=你的OpenAIKey
+export AI_MODEL=gpt-5.4-mini
+```
+
+配置完成后，提交页的“智能填写建议”会直接显示当前使用的是哪一个模型接口；如果未配置密钥，则页面会明确显示为“本地规则助手”。
 
 如果你准备将项目公开到 GitHub，建议把这些值替换为你自己的本地测试配置，不要直接复用敏感账号。
 

@@ -12,6 +12,7 @@ export const createNoticeApi = (payload) => http.post('/notices', payload)
 
 export const getOrderListApi = (params) => http.get('/orders', { params })
 export const createOrderApi = (payload) => http.post('/orders', payload)
+export const assistOrderApi = (payload) => http.post('/orders/assistant', payload)
 export const getOrderDetailApi = (id) => http.get(`/orders/${id}`)
 export const processOrderApi = (id, payload) => http.put(`/orders/${id}/process`, payload)
 export const evaluateOrderApi = (id, payload) => http.post(`/orders/${id}/evaluate`, payload)
